@@ -10,6 +10,9 @@ def get_coordinates(city):
                       f"name={city}&count=1&language=en&format=json")
 
     city_data = r_city.json()
+
+    if "results" not in city_data: return None
+
     latitude = city_data["results"][0]["latitude"]
     longitude = city_data["results"][0]["longitude"]
     return latitude, longitude
@@ -25,20 +28,27 @@ def get_weather(latitude, longitude):
     return weather
 
 def main():
-    loop = True
 
-    while loop:
+    while True:
         print("=" * 60)
         print("Von welcher Stadt wollen Sie die Temperatur wissen? // Zum Verlassen 'Q' eingeben")
         print("-" * 60)
         city = input().capitalize()
+        
         if city != "Q":
-            latitude, longitude = get_coordinates(city)
+
+            coordinates = get_coordinates(city)
+            if coordinates is None: 
+                print("Diese Stadt gibt es nicht, versuche erneut")
+                continue
+
+            latitude, longitude = coordinates
         
             weather = get_weather(latitude, longitude)
             print(weather)
+            
         else:
-            loop = False
+            break
 
 if __name__ == "__main__":
     main()
