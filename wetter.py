@@ -36,25 +36,24 @@ def main():
     print("=" * 80)
     while True:
         city = input("Stadt eingeben (Q zum Beenden): ").capitalize()
+
+        if city == "Q": break
+
         print("Lade Wetterdaten")
         time.sleep(1.5)
-        if city != "Q":
-
-            coordinates = get_coordinates(city)
-            if coordinates is None: 
-                print("Diese Stadt gibt es nicht, versuche erneut")
-                continue
-
-            latitude, longitude = coordinates
         
-            weather = get_weather(latitude, longitude)
-            print(f"In {city} hat es {weather} Grad!")
-            print("-" * 80)
-            time.sleep(1)
+        coordinates = get_coordinates(city)
+        if coordinates is None: 
+            print("Diese Stadt gibt es nicht, versuche erneut")
+            continue
+
+        latitude, longitude = coordinates
+    
+        weather = get_weather(latitude, longitude)
+        print(f"In {city} hat es {weather} Grad!")
+        print("-" * 80)
+        time.sleep(1)
             
-            
-        else:
-            break
 
 if __name__ == "__main__":
     main()
