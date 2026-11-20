@@ -1,4 +1,5 @@
 import requests
+import time
 
 #KONSTANTEN
 GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search"
@@ -29,12 +30,14 @@ def get_weather(latitude, longitude):
 
 def main():
 
+    
+    print("=" * 80)
+    print("Von welcher Stadt wollen Sie die Temperatur wissen? // Zum Verlassen 'Q' eingeben")
+    print("=" * 80)
     while True:
-        print("=" * 60)
-        print("Von welcher Stadt wollen Sie die Temperatur wissen? // Zum Verlassen 'Q' eingeben")
-        print("-" * 60)
-        city = input().capitalize()
-        
+        city = input("Stadt eingeben (Q zum Beenden): ").capitalize()
+        print("Lade Wetterdaten")
+        time.sleep(1.5)
         if city != "Q":
 
             coordinates = get_coordinates(city)
@@ -45,7 +48,10 @@ def main():
             latitude, longitude = coordinates
         
             weather = get_weather(latitude, longitude)
-            print(weather)
+            print(f"In {city} hat es {weather} Grad!")
+            print("-" * 80)
+            time.sleep(1)
+            
             
         else:
             break
